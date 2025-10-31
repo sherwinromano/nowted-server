@@ -4,7 +4,7 @@ import path from "path";
 
 const dataDir = process.env.DATA_DIR || path.resolve("data");
 
-if (!fs.existsSync(dataDir)) {
+if (!fs.existsSync(dataDir) && !dataDir.startsWith("/var/data")) {
   fs.mkdirSync(dataDir, { recursive: true });
 }
 
