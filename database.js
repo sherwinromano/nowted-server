@@ -2,10 +2,14 @@ import Database from "better-sqlite3";
 import fs from "fs";
 import path from "path";
 
-const dataDir = process.env.DATA_DIR || path.resolve("data");
+const isRender = !!process.env.RENDER;
 
-if (!fs.existsSync(dataDir) && !dataDir.startsWith("/var/data")) {
+const dataDir =
+  process.env.DATA_DIR || (isRender ? "/tmp" : path.resolve("data"));
+
+if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
+  console.log(`📁 Created data directory at: ${dataDir}`);
 }
 
 const dbPath = path.join(dataDir, "database.db");
